@@ -1,0 +1,107 @@
+<!-- 
+Pass value to many componets from input to multiple -->
+
+
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.js
+"></script>
+        <script src="react.js"></script>
+        <script src="react-dom.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/jsx">
+
+             class Root extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.state = {
+                        name: "",
+                        age:"",
+                        allRows:[],
+                        tempRows:[]
+                    }
+                    this.tblRows=[];
+                    this.addNewRow = this.addNewRow.bind(this)
+                }
+                addNewRow(arrayObj){
+                     
+                    // Create row to second componet
+            
+                    var delElm =  arrayObj[0];
+                       var newRow = <tr><td> {arrayObj[0]} </td><td> {arrayObj[1]} </td><td><input type="checkbox" name=""/></td><td><input type="button" onClick={this.delRowFromTbl.bind(this, delElm)} name="Delete" value="Delete"/></td></tr>;
+                       
+                       this.tblRows.push(newRow)
+                       this.setState({
+                        allRows:this.tblRows
+                       })
+                }
+
+                delRowFromTbl(deleteEntry){
+                 debugger
+                this.tblRows.indexOf(deleteEntry);
+
+                }
+
+                render(){
+                    return (
+                        <div>
+                            <MyInput passData ={this.addNewRow}/>
+                            <hr/>
+                            <RenderToTable newRow={this.state.allRows}/>
+                        </div>
+                    )
+                }
+            }    
+
+            class MyInput extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.addRowToTbl = this.addRowToTbl.bind(this)
+                }
+                addRowToTbl(e){
+                    var name = this.nameTb.value;
+                    var age = this.ageTb.value;
+                    //this.props.process(name)
+                    var arrayObj= [name, age];
+                    
+                    this.setState({
+                        tempRows:this.tblRows
+                       })
+
+                       
+                    this.props.passData(arrayObj);
+                    //var newTr = `<tr><td> </td></tr>`
+
+                }
+                render(){
+                   return (<div><input  ref={(nmIp) => this.nameTb = nmIp} type="text" placeholder="name"/>
+                    <input  ref={(ageIp)=>this.ageTb = ageIp}   type="text" name=""/>
+                    <button type="button" onClick={this.addRowToTbl}>Add Row</button>
+                    </div>)
+                }
+            }
+
+
+             class RenderToTable extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.state={
+                        convertedData:""
+                    }
+                }
+
+                render(){
+                    return (<div><table><tr><td>Name</td><td>Age</td><td>Action</td></tr> {this.props.newRow} </table> </div>)
+                }
+            }
+
+
+
+
+
+            ReactDOM.render(<Root/>,document.getElementById("root"))
+        </script>
+    </body>
+</html>

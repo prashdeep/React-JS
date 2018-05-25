@@ -1,0 +1,125 @@
+<!-- 
+Pass value to many componets from input to multiple -->
+
+
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.js
+"></script>
+        <script src="react.js"></script>
+        <script src="react-dom.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/jsx">
+
+
+
+
+           <!--  class MyInput extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.addRowToTbl = this.addRowToTbl.bind(this)
+                }
+                addRowToTbl(e){
+                    var name = e.target.value;
+                    var age = 
+                    this.props.process(name)
+                }
+                render(){
+                    return (<input  ref={(nmIp) => nameTb = ip} type="text" placeholder="name"></input>
+                            <input type="text" name=""> </input>
+                            <button type="button" onClick={this.addRowToTbl}></button>
+                    )
+                }
+            } -->
+
+
+
+
+
+
+
+
+            class Root extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.state = {
+                        data: ""
+                    }
+                    this.processData = this.processData.bind(this)
+                }
+                processData(name){
+                    var message = "Hello " + name;
+                    this.setState({
+                        data: message
+                    })
+                }
+                render(){
+                    return (
+                        <div>
+                            <MyInput process={this.processData}/>
+                            <hr/>
+                            <MyOutput message={this.state.data}/>
+                            <MyOutput2 convert={this.uppercaseData}  message2={this.state.data} />
+                            // This will not work bcoz we cant call function of other component
+                            //<MyOutput2 convert={this.uppercaseData}  message2={this.state.data} />
+
+
+                        </div>
+                    )
+                }
+            }    
+            class MyInput extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.nameTyped = this.nameTyped.bind(this)
+                }
+                nameTyped(e){
+                    var name = e.target.value
+                    this.props.process(name)
+                }
+                render(){
+                    return <input onKeyUp={this.nameTyped} type="text" placeholder="name"></input>
+                }
+            }
+            class MyOutput extends React.Component{
+                constructor(props){
+                    super(props)
+                }
+                render(){
+                    return <h1>{this.props.message}</h1>
+                }
+            }
+
+             class MyOutput2 extends React.Component{
+                constructor(props){
+                    super(props)
+                    this.uppercaseData = this.uppercaseData.bind(this);
+                    this.state={
+                        convertedData:""
+                    }
+                    this.uppercaseData()
+                }
+
+                componentWillUpdate(){
+
+                }
+
+                uppercaseData(){
+               
+                    var data2= this.props.message2;
+                    this.state.convertedData= data2.toUpperCase();
+                }
+                render(){
+                this.uppercaseData()
+                    return <h2>{ this.state.convertedData}</h2>
+                }
+            }
+
+
+
+            ReactDOM.render(<Root/>,document.getElementById("root"))
+        </script>
+    </body>
+</html>

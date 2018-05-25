@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+
+	<script type="text/javascript" src="react.js"></script>
+	<script type="text/javascript" src="react-dom.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+<script type="text/jsx">
+	class MyInput extends React.Component{
+
+		render(){
+		console.log(this.props)
+			return(<div>
+				Hello from MyInput
+				{this.props.children}
+				</div>);
+			
+		}
+	} 
+	ReactDOM.render(<MyInput><div>Hello
+					</div></MyInput>, document.getElementById("root"));
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<title></title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+
+	<script type="text/javascript" src="react.js"></script>
+	<script type="text/javascript" src="react-dom.js"></script>
+</head>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/jsx">
+    // Make components talk to each other
+
+    //make Master(3) component and add other 1 & 2 in this Master(3rd) Component
+
+    class Root extends React.Component{
+    	constructor(props){
+    		super(props)
+    		this.state={
+    			data:""
+    		}
+    		this.processData = this.processData.bind(this)
+
+    	}
+    	processData(name){
+    		var msg = "Hello"+ name;
+    		this.setState{
+    			data:msg
+    		}
+    	}
+    	render(){
+			return (
+				<div>
+					<MyInput process={this.processData}/>
+					<hr/>
+					<MyOutput message={this.state.data}/>
+				</div>
+			)
+		}
+    }
+
+	class MyInput extends React.Component{
+		constructor(props){
+			super(props)
+			this.nameTyped=  this.nameTyped.bind(this)
+		}
+
+		nameTyped(e){
+			var name = e.target.value;
+			this.props.process(name)
+		}
+		render(){
+			return <input onKeyUp={this.nameTyped} type="text" name="" placeholder="Name"> 
+			</input>
+		}
+	}
+
+	class MyOutput extends React.Component{
+		constructor(props){
+			super(props)
+		}
+		render(){
+			return <h1>{this.props.message}</h1>
+		}
+	}
+
+
+	ReactDOM.render(<Root/>, document.getElementById("root"));
+
+
+</script>
+</body>
+</html>
